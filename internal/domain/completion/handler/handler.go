@@ -1,6 +1,9 @@
 package handler
 
-import "github.com/gofiber/fiber/v2"
+import (
+	"github.com/gofiber/fiber/v2"
+	"routergpt/internal/domain/completion/model"
+)
 
 type completionHandler struct{}
 
@@ -9,5 +12,11 @@ func New() Handler {
 }
 
 func (h *completionHandler) CreateCompletion(c *fiber.Ctx) error {
-	return c.JSON(fiber.Map{"msg": "OK"})
+	var req model.CompletionRequestDTO
+	
+	if err := c.BodyParser(&req); err != nil {
+		return c.Status(400).JSON(fiber.Map{"error": "Cannot parse JSON"})
+	}
+
+	return c.JSON(req)
 }
