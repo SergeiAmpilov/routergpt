@@ -20,5 +20,10 @@ func (h *completionHandler) CreateCompletion(c *fiber.Ctx) error {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Cannot parse JSON"})
 	}
 
+	// Validate the request
+	if err := req.Validate(); err != nil {
+		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": err.Error()})
+	}
+
 	return c.JSON(req)
 }
