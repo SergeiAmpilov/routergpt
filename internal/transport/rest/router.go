@@ -1,6 +1,8 @@
 package rest
 
 import (
+	"net/http"
+
 	"github.com/gofiber/fiber/v2"
 	"routergpt/internal/domain/completion/handler"
 )
@@ -8,7 +10,7 @@ import (
 func SetupRoutes(app *fiber.App, h handler.Handler) {
 	// Health check route
 	app.Get("/ping", func(c *fiber.Ctx) error {
-		return c.SendStatus(200)
+		return c.SendStatus(http.StatusOK)
 	})
 
 	// Completion route
