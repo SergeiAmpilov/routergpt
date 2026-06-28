@@ -2,9 +2,12 @@ package main
 
 import (
 	"log"
-	"routergpt/internal/config"
 
 	"github.com/gofiber/fiber/v2"
+
+	"routergpt/internal/config"
+	"routergpt/internal/domain/completion/handler"
+	"routergpt/internal/transport/rest"
 )
 
 func main() {
@@ -13,9 +16,8 @@ func main() {
 
 	app := fiber.New()
 
-	app.Get("/", func(c *fiber.Ctx) error {
-		return c.SendString("Hello, World! This is a Fiber web server.")
-	})
+	h := handler.New()
+	rest.SetupRoutes(app, h)
 
 	log.Fatal(app.Listen(":" + cfg.Port))
 }
