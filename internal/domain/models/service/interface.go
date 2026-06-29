@@ -1,3 +1,10 @@
 package service
 
-type ModelsService interface {}
+import (
+	"context"
+	"routergpt/internal/domain/models/model"
+)
+
+type ModelsService interface {
+	CreateModel(ctx context.Context, req model.CreateAIModelRequest) (*model.AIModel, error)
+}
